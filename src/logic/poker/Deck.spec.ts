@@ -36,8 +36,8 @@ describe("Deck", () => {
       .map((card) => card.display);
     expect(nextThreeCards).toEqual(["2♥", "3♠", "3♦"]);
     expect(pick(d.debug, ["cursor", "remaining", "length"])).toEqual({
-      cursor: 0,
-      length: 6,
+      cursor: 6,
+      length: 52,
       remaining: 46,
     });
   });
