@@ -15,6 +15,17 @@ export default class Deck {
     );
     this.length = this.cards.length;
   }
+  get debug() {
+    return {
+      cards: this.cards,
+      cursor: this.cursor,
+      remaining: this.remaining,
+      length: this.length,
+    };
+  }
+  get remaining (){
+    return this.length - this.cursor;
+  }
   public dealCard = (): Card | never => {
     if (this.cursor >= this.length) {
       throw new Error(`Deck is empty`);
@@ -31,12 +42,6 @@ export default class Deck {
     }
     return Array(n).fill(null).map(this.dealCard);
   };
-  get debug() {
-    return {
-      cards: this.cards,
-      cursor: this.cursor,
-    };
-  }
   public shuffle() {
     this.cursor = 0;
     let index;

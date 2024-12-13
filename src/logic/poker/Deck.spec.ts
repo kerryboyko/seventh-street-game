@@ -1,10 +1,16 @@
 import Deck from "./Deck";
+import { pick } from "radash";
 
 describe("Deck", () => {
   const d = new Deck("seventhst test");
 
   it("creates a deck of cards", () => {
     expect(d.cards.length).toBe(52);
+    expect(pick(d.debug, ["cursor", "remaining", "length"])).toEqual({
+      cursor: 0,
+      length: 52,
+      remaining: 52,
+    });
   });
   it("creates the french deck of cards", () => {
     let cardString = d.cards
@@ -29,6 +35,11 @@ describe("Deck", () => {
       .map(() => d.dealCard())
       .map((card) => card.display);
     expect(nextThreeCards).toEqual(["2♥", "3♠", "3♦"]);
+    expect(pick(d.debug, ["cursor", "remaining", "length"])).toEqual({
+      cursor: 0,
+      length: 6,
+      remaining: 46,
+    });
   });
   it("deals multiple cards", () => {
     expect(d.debug.cursor).toBe(6);
@@ -46,16 +57,16 @@ describe("Deck", () => {
     expect(() => d.dealCards(52)).toThrow(
       "Cannot deal 52 cards, the deck only contains 41 cards"
     );
-    expect(d.debug.cursor).toBe(11); 
+    expect(d.debug.cursor).toBe(11);
   });
   it("will not deal to the end of the deck manually", () => {
     d.dealCards(39);
-    expect(d.debug.cursor).toBe(50); 
+    expect(d.debug.cursor).toBe(50);
     d.dealCard();
     d.dealCard();
     expect(d.debug.cursor).toBe(52);
-    expect(() => d.dealCard()).toThrow("Deck is empty")
-  })
+    expect(() => d.dealCard()).toThrow("Deck is empty");
+  });
   it("shuffles the cards", () => {
     d.shuffle();
     expect(d.debug.cursor).toBe(0);
