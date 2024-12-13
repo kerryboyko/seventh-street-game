@@ -38,10 +38,23 @@ export default class Card {
   }
   // creates a card just from a two-character
   public static create = (input: string) => {
-    const [rankChar, suitChar] = input.split("");
-    const suit = invertSuitMapper[suitChar] || suitChar;
-    const rank = parseInt((invertRankMapper[rankChar] || rankChar) as string, 10);
-    if (!suit || !rank) {
+    let [rankChar, suitChar] = input.split("");
+   const suit = invertSuitMapper[suitChar] || suitChar;
+    let rank: number = 0
+    if(rankChar === 'T'){
+      rank = 10;
+    } else if (rankChar === 'J'){
+      rank = 11;
+    } else if (rankChar === 'Q'){
+      rank = 12;
+    } else if (rankChar === 'K'){
+      rank = 13;
+    } else if (rankChar === 'A'){
+      rank = 14
+    } else {
+      rank = parseInt(rankChar, 10);
+    }
+    if (typeof suit !== 'string' || typeof rank !== 'number') {
       throw new TypeError(`Input ${input} is not a valid card.`);
     }
     return new Card(rank, suit);

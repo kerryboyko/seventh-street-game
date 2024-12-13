@@ -36,6 +36,18 @@ const matchMap = (rankMap: Record<number, number>, test: number[]) =>
     test
   );
 
+const compareIndividualCardRanks = (a: number[], b: number[]) => {
+  for (let i = 0, l = a.length; i < l; i++) {
+    if (a[i] > b[i]) {
+      return 1;
+    }
+    if (a[i] < b[i]) {
+      return -1;
+    }
+  }
+  return 0;
+};
+
 export default class Ranker {
   public static isQuads = (hand: Card[]) =>
     Object.values(mapToRanks(hand)).includes(4);
@@ -138,7 +150,7 @@ export default class Ranker {
       };
     }
 
-    const priority = invert(mapToRanks(hand));
+    const priority: Record<string, number> = Object.entries(mapToRanks(hand)).reduce((acc, [rank, amount]) => ({...acc, [amount]: parseInt(rank, 10)}), {});
 
     if (Ranker.isQuads(hand)) {
       return {
@@ -158,7 +170,6 @@ export default class Ranker {
     }
     if (Ranker.isOnePair(hand)) {
       const sortedHand = hand.map(({ rank }) => rank).sort((a, b) => b - a);
-
       return {
         handRank: "onepair",
         handScore: 2,
@@ -170,5 +181,36 @@ export default class Ranker {
       };
     }
     throw new Error("Unable to rank hand.");
+  };
+
+  public static findWinningHand = (
+    ...hands: Card[][]
+  ): { winningRank: EvaluatedHandRank | null; winners: Card[][] } => {
+    let winningRank = null;
+    let winners: Card[][] = [];
+    for (const hand of hands) {
+      const handRank = Ranker.findHandRank(hand);
+
+      if (winningRank === null) {
+        winningRank = handRank;
+        winners = [hand];
+      } else if (handRank.handScore > winningRank!.handScore) {
+        winningRank = handRank;
+        winners = [hand];
+      } else if (handRank.handScore === winningRank!.handScore) {
+        let kickerCompare = compareIndividualCardRanks(
+          handRank.ranks,
+          winningRank!.ranks
+        );
+        if (kickerCompare > 0) {
+          winningRank = handRank;
+          winners = [hand];
+        }
+        if (kickerCompare === 0) {
+          winners.push(hand);
+        }
+      }
+    }
+    return { winningRank, winners };
   };
 }
