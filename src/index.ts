@@ -1,3 +1,3 @@
-export const canary = (w: string) => `Hello ${w}!`
+import { canary } from "./canary";
 
-console.log(canary('World'))
+console.log(canary("World"));
