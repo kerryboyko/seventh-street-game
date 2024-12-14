@@ -6,7 +6,7 @@ export default class Deck {
   private cursor: number = 0;
   private rng: seedrandom.PRNG;
   private length: number;
-  constructor(public seed: string | undefined) {
+  constructor(public seed?: string) {
     this.rng = seedrandom(seed);
     [2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14].forEach((rank: Card["rank"]) =>
       (["s", "d", "c", "h"] as Card["suit"][]).forEach((suit: Card["suit"]) => {
