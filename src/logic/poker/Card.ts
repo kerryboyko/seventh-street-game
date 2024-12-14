@@ -27,6 +27,9 @@ export default class Card {
   get display(): string {
     return `${rankMapper[this.rank] ? rankMapper[this.rank] : this.rank.toString()}${suitMapper[this.suit]}`;
   }
+  get text(): string {
+    return `${rankMapper[this.rank] ? rankMapper[this.rank] : this.rank.toString()}${this.suit}`;
+  }
   get value(): number {
     if (this.rank === 14) {
       return 11;
@@ -59,4 +62,8 @@ export default class Card {
     }
     return new Card(rank, suit);
   };
+
+  public static cardsToText = (...cards: Card[]) => {
+    return cards.sort((a, b) => b.rank - a.rank).map((card) => card.text).join("")
+  }
 }

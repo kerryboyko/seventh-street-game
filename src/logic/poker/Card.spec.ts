@@ -24,4 +24,13 @@ describe("Card", () => {
 
     expect(queenOfDiamonds.display).toBe("Q♦");
   });
+  describe("static Card.cardsToText()", () => {
+    it('converts cards to text', () => {
+      const threeOfClubs = new Card(3, "c");
+      const aceOfSpades = new Card(14, "s");
+      const queenOfDiamonds = new Card(12, "d");
+      expect(Card.cardsToText(threeOfClubs, aceOfSpades, queenOfDiamonds)).toBe("AsQd3c")
+
+    })
+  })
 });
