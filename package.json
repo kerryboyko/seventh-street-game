@@ -27,19 +27,6 @@
       "yarn run lint"
     ]
   },
-  "jest": {
-    "roots": [
-      "<rootDir>/src"
-    ],
-    "transform": {
-      "^.+\\.(ts)$": [
-        "ts-jest",
-        {
-          "tsconfig": "tsconfig.json"
-        }
-      ]
-    }
-  },
   "devDependencies": {
     "@types/jest": "29.5.14",
     "@typescript-eslint/eslint-plugin": "8.18.0",
@@ -53,7 +40,8 @@
     "prettier": "3.4.2",
     "ts-jest": "29.2.5",
     "ts-node": "10.9.2",
-    "typescript": "5.7.2"
+    "typescript": "5.7.2",
+    "prettier-2": "npm:prettier@^2"
   },
   "dependencies": {
     "@types/seedrandom": "^3.0.8",
