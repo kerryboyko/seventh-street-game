@@ -1,6 +1,7 @@
 import Card from "./Card";
 import Ranker from "./Ranker";
 import { omit } from "radash";
+import { makeHand } from "./utils/makeHand";
 
 const sampleHands = {
   straightflush: ["AdKdQdJdTd", "9sTsJs8s7s", "2c4c5cAc3c"],
@@ -13,9 +14,6 @@ const sampleHands = {
   onepair: ["AdKdJcJdTd", "7hTsJs8s7s", "2c4c3hAc3c"],
   highcard: ["Ad3d5c7d9d", "AsKsQs2s3c"],
 };
-
-const makeHand = (str: string): Card[] =>
-  str.match(/.{1,2}/g)?.map(Card.create) as Card[];
 
 describe("Ranker", () => {
   describe("correctly evaluates hands within the same handrank", () => {
