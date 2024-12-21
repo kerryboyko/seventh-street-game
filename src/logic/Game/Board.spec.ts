@@ -2,21 +2,12 @@ import Board from "./Board";
 import { pick, mapValues } from "radash";
 
 describe("class Board", () => {
-  const board = new Board("seventhst test");
+  const board = new Board(['player1', 'player2', 'player3'], "seventhst test");
   it("constructor() generates a neighborhood", () => {
     expect(board.debug()).toMatchSnapshot();
   });
   it("Board.getBoardState() can get a board state", () => {
     expect(board.getBoardState()).toMatchSnapshot();
-  });
-  it("Board.addPlayer() can add players", () => {
-    expect(board.addPlayer("player1")).toBe(true);
-    expect(board.addPlayer("player2")).toBe(true);
-    expect(board.players).toEqual(["player1", "player2"]);
-    expect(board.addPlayer("player1")).toBe(false);
-    expect(board.players).toEqual(["player1", "player2"]);
-    expect(board.addPlayer("player3")).toBe(true);
-    expect(board.players).toEqual(["player1", "player2", "player3"]);
   });
   it("Board.setOwner can set owners of properties", () => {
     board.setOwner("player1", "E1");

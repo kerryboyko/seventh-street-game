@@ -1,5 +1,4 @@
 import Deck from "../poker/Deck";
-import Card from "../poker/Card";
 import Property from "./Property";
 // The parks will be at index 0,
 // 1 - 7 will be the corresponding streets.
@@ -24,22 +23,16 @@ const generateNeighborhood = (deck: Deck): Record<string, Property> => {
 export default class Board {
   private deck: Deck;
   private neighborhood: Record<string, Property>;
-  public players: string[] = [];
-  constructor(public seed?: string) {
+  constructor(public players: string[], public seed?: string) {
     this.deck = new Deck(this.seed);
     this.neighborhood = generateNeighborhood(this.deck);
   }
   public debug = () => ({
     deck: this.deck,
     neighborhood: this.neighborhood,
+    players: this.players,
   });
-  public addPlayer = (playerName: string) => {
-    if (this.players.includes(playerName)) {
-      return false;
-    }
-    this.players.push(playerName);
-    return true;
-  };
+
   public getBoardState = (player?: string): Record<string, any> => {
     const acc: Record<string, any> = {};
     Object.values(this.neighborhood)
@@ -47,7 +40,7 @@ export default class Board {
       .forEach((prop: Property) => {
         acc[prop.name] = prop.getState(player);
       });
-      return acc;
+    return acc;
   };
 
   public setOwner = (
