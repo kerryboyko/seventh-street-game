@@ -20,6 +20,9 @@ importers:
 
   apps/server:
     dependencies:
+      '@repo/websockets':
+        specifier: workspace:*
+        version: link:../../packages/websockets
       express:
         specifier: ^4.21.2
         version: 4.21.2
@@ -108,6 +111,15 @@ importers:
       typescript:
         specifier: 5.5.4
         version: 5.5.4
+
+  packages/websockets:
+    devDependencies:
+      '@repo/typescript-config':
+        specifier: workspace:*
+        version: link:../typescript-config
+      typescript:
+        specifier: latest
+        version: 5.7.2
 
 packages:
 

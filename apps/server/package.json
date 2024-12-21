@@ -6,10 +6,12 @@
   "scripts": {
     "dev": "tsc && nodemon dist/index.js"
   },
+  "type": "module",
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@repo/websockets": "workspace:*",
     "express": "^4.21.2",
     "socket.io": "^4.8.1",
     "typescript": "^5.7.2"
