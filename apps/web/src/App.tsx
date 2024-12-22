@@ -7,6 +7,7 @@ import {wsServer, wsClient} from '@repo/websockets/commands'
 
 const socket = io('http://localhost:5000');
 
+let x = 0;
 
 function App() {
   const [count, setCount] = useState(0)
@@ -14,14 +15,19 @@ function App() {
   const [inputValue, setInputValue] = useState<string>("");
 
   useEffect(() => {
+    console.log('useEffectrunning')
+    x = x + 1;
+    console.log(`has run ${x} times`)
     // Listen for messages from the server
     socket.on(wsServer.CHAT_MESSAGE, (message) => {
+      console.log('socketon')
       setMessages((prev) => [...prev, message]);
     });
 
     // Clean up on component unmount
     return () => {
-      socket.disconnect();
+      console.log('This is closing too soon');
+      // socket.disconnect();
     };
   }, []);
   const handleInput: ChangeEventHandler<HTMLInputElement> = (event) => {
@@ -47,7 +53,7 @@ function App() {
         <button onClick={sendMessage}>send</button>
       </div>
       <ul>
-      {messages.map((msg) => <li>{msg}</li>)}</ul>
+      {messages.map((msg, idx) => <li key={`${msg}_${idx}`}>{msg}</li>)}</ul>
       <div className="card">
         <button onClick={() => setCount((count) => count + 1)}>
           count is {count}

@@ -34,6 +34,7 @@ io.on('connection', (socket) => {
   })
   socket.on(wsClient.CHAT_MESSAGE, (msg) => {
     console.log(wsClient.CHAT_MESSAGE, msg);
+    socket.emit(wsServer.CHAT_MESSAGE, `Private to ${socket.id} Foo`)
     io.emit(wsServer.CHAT_MESSAGE, `${socket.id}:${msg}`);
   })
 })
