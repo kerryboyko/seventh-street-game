@@ -3,6 +3,7 @@ import {createServer} from 'node:http';
 import path from 'node:path';
 import { Server } from 'socket.io';
 import {wsServer, wsClient} from '@repo/websockets/commands'
+import UserRegistration from './User/UserRegistration.js';
 
 console.log({wsServer, wsClient})
 const PORT = 5000;
@@ -24,9 +25,11 @@ app.get('/', (req, res) => {
     res.sendFile(pathToHtml);
 });
 
+const userRegistration = UserRegistration.getInstance();
 
 io.on('connection', (socket) => {
   socket.broadcast.emit(wsServer.CONNECTION_CONFIRMED);
+  userRegistration.registerSocket(socket);
 
   console.log(wsServer.CONNECTION_CONFIRMED, socket.id)
   socket.onAny((cmd) => {
@@ -36,10 +39,12 @@ io.on('connection', (socket) => {
     console.log(wsClient.CHAT_MESSAGE, msg);
     socket.emit(wsServer.CHAT_MESSAGE, `Private to ${socket.id} Foo`)
     io.emit(wsServer.CHAT_MESSAGE, `${socket.id}:${msg}`);
+    userRegistration.debug();
   })
 })
 io.on('disconnect', (socket) => {
   console.log(`Disconnected, ${socket.id}`)
+  userRegistration.removeUser(socket.id);
 })
 
 server.listen(PORT, () => {
