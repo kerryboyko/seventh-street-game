@@ -4,7 +4,8 @@ export const wsServer = makeSocketCommand(
   "wsServer",
   "CONNECTION_CONFIRMED",
   "SERVER_STARTED",
-  "CHAT_MESSAGE"
+  "CHAT_MESSAGE",
+  "NEW_GAME_CREATED"
 );
 
 export const wsClient = makeSocketCommand(
@@ -12,5 +13,6 @@ export const wsClient = makeSocketCommand(
   "CONNECTING",
   "CONNECTED",
   "REGISTER_PLAYER",
-  "CHAT_MESSAGE"
+  "CHAT_MESSAGE",
+  "CREATE_NEW_GAME",
 );

@@ -41,6 +41,10 @@ io.on('connection', (socket) => {
     io.emit(wsServer.CHAT_MESSAGE, `${socket.id}:${msg}`);
     userRegistration.debug();
   })
+  socket.on(wsClient.CREATE_NEW_GAME, () => {
+    const code = "REGOHONION";
+    socket.emit(wsServer.NEW_GAME_CREATED, code);
+  })
 })
 io.on('disconnect', (socket) => {
   console.log(`Disconnected, ${socket.id}`)
