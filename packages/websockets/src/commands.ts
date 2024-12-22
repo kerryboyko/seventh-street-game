@@ -2,6 +2,7 @@ import makeSocketCommand from "./makeSocketCommand.js"
 
 export const wsServer = makeSocketCommand(
   "wsServer",
+  "LOG_ME",
   "CONNECTION_CONFIRMED",
   "SERVER_STARTED",
   "CHAT_MESSAGE",
@@ -10,6 +11,7 @@ export const wsServer = makeSocketCommand(
 
 export const wsClient = makeSocketCommand(
   "wsClient",
+  "LOG_ME",
   "CONNECTING",
   "CONNECTED",
   "REGISTER_PLAYER",

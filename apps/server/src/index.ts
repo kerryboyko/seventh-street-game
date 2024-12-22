@@ -35,6 +35,9 @@ io.on('connection', (socket) => {
   socket.onAny((cmd) => {
     console.log("COMMAND: ", cmd)
   })
+  socket.on(wsClient.LOG_ME, (msg) => {
+    console.log(`Message from client ${socket.id}: ${msg}`)
+  })
   socket.on(wsClient.CHAT_MESSAGE, (msg) => {
     console.log(wsClient.CHAT_MESSAGE, msg);
     socket.emit(wsServer.CHAT_MESSAGE, `Private to ${socket.id} Foo`)
@@ -43,13 +46,26 @@ io.on('connection', (socket) => {
   })
   socket.on(wsClient.CREATE_NEW_GAME, () => {
     const code = "REGOHONION";
-    socket.emit(wsServer.NEW_GAME_CREATED, code);
+    console.log(`Creating Game: ${code}`)
+    socket.join(code);
+    io.to(code).emit(wsServer.NEW_GAME_CREATED, code);
+    socket.emit(wsServer.LOG_ME, `You have joined room ${code}`)
   })
 })
 io.on('disconnect', (socket) => {
   console.log(`Disconnected, ${socket.id}`)
   userRegistration.removeUser(socket.id);
 })
+
+io.of("/").adapter.on("create-room", (room) => {
+  console.log(`room ${room} was created`);
+});
+
+io.of("/").adapter.on("join-room", (room, id) => {
+  console.log(`socket ${id} has joined room ${room}`);
+});
+
+
 
 server.listen(PORT, () => {
   console.log(`server running at http://localhost:${PORT}`);

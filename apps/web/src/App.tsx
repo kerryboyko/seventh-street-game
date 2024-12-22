@@ -14,12 +14,17 @@ function App() {
   useEffect(() => {
     // Listen for messages from the server
     socket.on(wsServer.NEW_GAME_CREATED, (gameId) => {
+      console.log(`new game created ${gameId}`)
       setLoading('DONE')
       navigate(`/game/${gameId}`)
     });
+    socket.on(wsServer.LOG_ME, (message) => {
+      console.log(`Message: ${message}`)
+    })
 
     // Clean up on component unmount
     return () => {
+      console.log('disconnecting');
       socket.disconnect();
     };
   }, []);
