@@ -7,27 +7,20 @@ import {wsServer, wsClient} from '@repo/websockets/commands'
 
 const socket = io('http://localhost:5000');
 
-let x = 0;
-
 function App() {
   const [count, setCount] = useState(0)
-  const [messages, setMessages] = useState<any[]>([]);
+  const [messages, setMessages] = useState<string[]>([]);
   const [inputValue, setInputValue] = useState<string>("");
 
   useEffect(() => {
-    console.log('useEffectrunning')
-    x = x + 1;
-    console.log(`has run ${x} times`)
     // Listen for messages from the server
     socket.on(wsServer.CHAT_MESSAGE, (message) => {
-      console.log('socketon')
       setMessages((prev) => [...prev, message]);
     });
 
     // Clean up on component unmount
     return () => {
-      console.log('This is closing too soon');
-      // socket.disconnect();
+      socket.disconnect();
     };
   }, []);
   const handleInput: ChangeEventHandler<HTMLInputElement> = (event) => {
