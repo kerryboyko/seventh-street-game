@@ -1,6 +1,6 @@
-import Card from "../Card";
+import Card from "../Card.ts";
 
-import { getAllCombinations } from "./getAllCombinations";
+import { getAllCombinations } from "./getAllCombinations.ts";
 
 const makeHand = (str: string): Card[] =>
   str.match(/.{1,2}/g)?.map(Card.create) as Card[];
@@ -22,7 +22,7 @@ describe("getsAllCombinagtionsOfCards", () => {
     const combos = getAllCombinations(sevenCards, 5);
 
     expect(combos.length).toBe(21);
-    expect(combos.map((hand) => Card.cardsToText(...hand)).sort()).toEqual([
+    expect(combos.map((hand: Card[]) => Card.cardsToText(...hand)).sort()).toEqual([
       "6d5c4c3c2c",
       "7h5c4c3c2c",
       "7h6d4c3c2c",

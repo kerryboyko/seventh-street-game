@@ -1,5 +1,5 @@
-import Deck from "../poker/Deck";
-import Property from "./Property";
+import Deck from "../poker/Deck.ts";
+import Property from "./Property.ts";
 // The parks will be at index 0,
 // 1 - 7 will be the corresponding streets.
 

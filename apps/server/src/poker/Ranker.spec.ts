@@ -1,7 +1,7 @@
-import Card from "./Card";
-import Ranker from "./Ranker";
+import Card from "./Card.ts";
+import Ranker from "./Ranker.ts";
 import { omit } from "radash";
-import { makeHand } from "./utils/makeHand";
+import { makeHand } from "./utils/makeHand.ts";
 
 const sampleHands = {
   straightflush: ["AdKdQdJdTd", "9sTsJs8s7s", "2c4c5cAc3c"],

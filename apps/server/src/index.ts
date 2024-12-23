@@ -1,6 +1,5 @@
 import express from "express";
 import { createServer } from "node:http";
-import path from "node:path";
 import { Server } from "socket.io";
 import { wsServer, wsClient } from "@repo/websockets/commands";
 import UserRegistration from "./Services/UserRegistration.js";
@@ -16,16 +15,6 @@ const io = new Server(server, {
     methods: ["GET", "POST"],
   },
 });
-// Correctly get the directory of the current file
-const currentDir = path.dirname(new URL(import.meta.url).pathname);
-
-// Resolve the path to the HTML file
-const pathToHtml = path.resolve(currentDir, "../static/index.html");
-
-app.get("/", (req, res) => {
-  res.sendFile(pathToHtml);
-});
-
 const userRegistration = UserRegistration.getInstance();
 const gameRegistration = GameRegistration.getInstance();
 
@@ -37,10 +26,10 @@ io.on("connection", (socket) => {
   socket.onAny((cmd) => {
     console.log("COMMAND: ", cmd);
   });
-  socket.on(wsClient.LOG_ME, (msg) => {
+  socket.on(wsClient.LOG_ME, (msg: string): void => {
     console.log(`Message from client ${socket.id}: ${msg}`);
   });
-  socket.on(wsClient.CHAT_MESSAGE, (msg) => {
+  socket.on(wsClient.CHAT_MESSAGE, (msg: string): void => {
     console.log(wsClient.CHAT_MESSAGE, msg);
     socket.emit(wsServer.CHAT_MESSAGE, `Private to ${socket.id} Foo`);
     io.emit(wsServer.CHAT_MESSAGE, `${socket.id}:${msg}`);

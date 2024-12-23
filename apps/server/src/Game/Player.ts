@@ -1,4 +1,4 @@
-import Property from "./Property";
+import Property from "./Property.ts";
 
 export default class Player {
   public cash: number = 2000;

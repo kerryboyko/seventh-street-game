@@ -1,6 +1,6 @@
-import Card from "../Card";
-import Ranker from "../Ranker";
-import { getAllCombinations } from "./getAllCombinations";
+import Card from "../Card.ts";
+import Ranker from "../Ranker.ts";
+import { getAllCombinations } from "./getAllCombinations.ts";
 
 export const makeBestPokerHand = (hand: Card[]) => {
   if (hand.length < 5) {

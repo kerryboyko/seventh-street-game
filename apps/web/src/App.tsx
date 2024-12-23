@@ -1,9 +1,9 @@
-import { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import "./App.css";
 import { io } from "socket.io-client";
 import { Switch, Route, useLocation } from "wouter";
 import { wsServer, wsClient } from "@repo/websockets/commands";
-import GamePage from "./pages/GamePage";
+import GamePage from "./pages/GamePage.tsx";
 
 const socket = io("http://localhost:5000");
 
@@ -13,12 +13,12 @@ function App() {
 
   useEffect(() => {
     // Listen for messages from the server
-    socket.on(wsServer.NEW_GAME_CREATED, (gameId) => {
+    socket.on(wsServer.NEW_GAME_CREATED, (gameId: string):void => {
       console.log(`new game created ${gameId}`);
       setLoading("DONE");
       navigate(`/game/${gameId}`);
     });
-    socket.on(wsServer.LOG_ME, (message) => {
+    socket.on(wsServer.LOG_ME, (message:string): void => {
       console.log(`Message: ${message}`);
     });
 

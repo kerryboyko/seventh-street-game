@@ -1,4 +1,4 @@
-import Board from "./Board";
+import Board from "./Board.ts";
 import { pick, mapValues } from "radash";
 
 describe("class Board", () => {
@@ -21,7 +21,6 @@ describe("class Board", () => {
     );
   });
   it("will display the correct info to the correct owners", () => {
-    const boardState = board.getBoardState();
     const cherryPicker = (
       obj: Record<string, Record<string, any>>,
       firstSetProps: string[],
@@ -36,7 +35,6 @@ describe("class Board", () => {
       ["E1", "W2", "S3", "N4"],
       ["name", "cardDisplay", "owner"]
     );
-    console.log(Object.keys(anonymous))
 
     const p1 = cherryPicker(
       board.getBoardState("player1"),

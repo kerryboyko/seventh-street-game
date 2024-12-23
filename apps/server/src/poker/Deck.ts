@@ -1,5 +1,5 @@
 import seedrandom from "seedrandom";
-import Card from "./Card";
+import Card from "./Card.ts";
 
 export default class Deck {
   public cards: Card[] = [];

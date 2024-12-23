@@ -1,4 +1,4 @@
-import Card from "../poker/Card";
+import Card from "../poker/Card.ts";
 
 export default class Property {
   public revealed: boolean = false;

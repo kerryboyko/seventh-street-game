@@ -1,4 +1,4 @@
-import Card from "./Card";
+import Card from "./Card.ts";
 
 describe("Card", () => {
   it("creates the three of clubs", () => {

@@ -1,6 +1,6 @@
-import Card from "../Card";
-import { makeBestPokerHand } from "./makeBestPokerHand";
-import { makeHand } from "./makeHand";
+import Card from "../Card.ts";
+import { makeBestPokerHand } from "./makeBestPokerHand.ts";
+import { makeHand } from "./makeHand.ts";
 
 describe("makeBestPokerHand()", () => {
   it("makes the best five card hand out of seven cards", () => {

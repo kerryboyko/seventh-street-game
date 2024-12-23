@@ -1,4 +1,4 @@
-import Card from "./Card";
+import Card from "./Card.ts";
 import { invert, isEqual } from "radash";
 
 export interface EvaluatedHandRank {
@@ -38,16 +38,16 @@ const matchMap = (rankMap: Record<number, number>, test: number[]) =>
 
 const compareIndividualCardRanks = (a: number[], b: number[]) => {
   for (let i = 0, l = a.length; i < l; i++) {
-    if (a[i] > b[i]) {
-      return 1;
+      if (a[i] > b[i]) {
+        return 1;
+      }
+      if (a[i] < b[i]) {
+        return -1;
+      }
     }
-    if (a[i] < b[i]) {
-      return -1;
-    }
-  }
-  return 0;
-};
-
+    return 0;
+  };
+  
 export default class Ranker {
   public static isQuads = (hand: Card[]) =>
     Object.values(mapToRanks(hand)).includes(4);
