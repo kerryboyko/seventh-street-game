@@ -14,7 +14,7 @@ export default class UserRegistration {
     return UserRegistration.instance;
   }
   public registerSocket = (socket: Socket) => {
-    console.log('registering socket?')
+    console.log("registering socket?");
     this.sockets.set(socket.id, socket);
   };
   public registerName = (socket: Socket, name: string) => {
