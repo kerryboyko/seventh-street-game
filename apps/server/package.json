@@ -13,6 +13,7 @@
   "dependencies": {
     "@repo/websockets": "workspace:*",
     "express": "^4.21.2",
+    "radash": "^12.1.0",
     "socket.io": "^4.8.1",
     "typescript": "^5.7.2"
   },

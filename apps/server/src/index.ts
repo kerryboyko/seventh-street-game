@@ -3,7 +3,8 @@ import { createServer } from "node:http";
 import path from "node:path";
 import { Server } from "socket.io";
 import { wsServer, wsClient } from "@repo/websockets/commands";
-import UserRegistration from "./User/UserRegistration.js";
+import UserRegistration from "./Services/UserRegistration.js";
+import GameRegistration from "./Services/GameRegistration.js";
 
 console.log({ wsServer, wsClient });
 const PORT = 5000;
@@ -26,6 +27,7 @@ app.get("/", (req, res) => {
 });
 
 const userRegistration = UserRegistration.getInstance();
+const gameRegistration = GameRegistration.getInstance();
 
 io.on("connection", (socket) => {
   socket.broadcast.emit(wsServer.CONNECTION_CONFIRMED);
