@@ -1,17 +1,18 @@
 {
-  "name": "@repo/websockets",
+  "name": "@repo/socket-events",
   "type": "module",
   "scripts": {
     "dev": "tsc --watch",
     "build": "tsc"
   },
   "exports": {
-    "./commands": {
-      "types": "./src/commands.ts",
-      "default": "./dist/commands.js"
+    ".": {
+      "types": "./src/index.ts",
+      "default": "./dist/index.js"
     }
   },
   "devDependencies": {
+    "@repo/typescript-config": "workspace:*",
     "typescript": "latest"
   }
 }

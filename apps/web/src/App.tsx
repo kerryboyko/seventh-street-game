@@ -1,58 +1,47 @@
-import React, { useCallback, useEffect, useState } from "react";
-import "./App.css";
-import { io } from "socket.io-client";
-import { Switch, Route, useLocation } from "wouter";
-import { wsServer, wsClient } from "@repo/websockets/commands";
-import GamePage from "./pages/GamePage.tsx";
+import { useState, useEffect, useCallback, MouseEventHandler, ChangeEventHandler } from 'react'
+import './App.css'
+import {wsClient} from '../../../packages/socket-events/dist/commands'
 
-const socket = io("http://localhost:5000");
+const socket = new WebSocket("ws://localhost:9001")
+
 
 function App() {
-  const [loading, setLoading] = useState<string>("IDLE");
-  const [, navigate] = useLocation();
-
+  const [log, setLog] = useState<string[]>([])
+  const [text, setText] = useState<string>("");
   useEffect(() => {
-    // Listen for messages from the server
-    socket.on(wsServer.NEW_GAME_CREATED, (gameId: string):void => {
-      console.log(`new game created ${gameId}`);
-      setLoading("DONE");
-      navigate(`/game/${gameId}`);
-    });
-    socket.on(wsServer.LOG_ME, (message:string): void => {
-      console.log(`Message: ${message}`);
-    });
 
-    // Clean up on component unmount
+    // Connection opened
+    const onOpen = (_event: Event) => {
+      socket.send("Connection established")
+    }
+    const onMessage = ((event: any) => {
+      setLog((state) => state.concat(JSON.stringify(event?.data)));
+      console.log('Message from server', event?.data)
+    })
+    socket.addEventListener("open", onOpen);
+
+    // Listen for messages
+    socket.addEventListener("message", onMessage);
     return () => {
-      console.log("disconnecting");
-      socket.disconnect();
-    };
-  }, [navigate]);
-
-  const handleCreateNewGame = useCallback(() => {
-    setLoading("LOADING");
-    socket.emit(wsClient.CREATE_NEW_GAME);
-  }, []);
+      socket.removeEventListener('open', onOpen)
+      socket.removeEventListener('message', onMessage)
+    }
+  }, [])
+  const handleSend: MouseEventHandler<HTMLButtonElement> = useCallback(() => {
+    socket.send(JSON.stringify(wsClient.LOG_ME(text)))
+  }, [text])
+  const handleInput: ChangeEventHandler<HTMLInputElement> = useCallback((event) => {
+    setText(event.target.value);
+  },[])
   return (
     <>
-      <Switch>
-        <Route path="/game/:gameId">
-          {(params) => <GamePage gameId={params.gameId} />}
-        </Route>
-        <Route path="/">
-          <div>
-            <h1>Seventh Street</h1>
-            <h2>The Real-Estate Trading Game Of Deception and Deduction</h2>
-            {loading === "LOADING" ? (
-              <div>Loading</div>
-            ) : (
-              <button onClick={handleCreateNewGame}>Create New Game</button>
-            )}
-          </div>
-        </Route>
-      </Switch>
+      <div>
+        <input type="text" value={text} onChange={handleInput}/>
+        <button onClick={handleSend}>handleSend</button>
+        <ul>{log.map((entry: string, i) => <li key={`${entry}_${i}`}>{entry}</li>)}</ul>
+       </div>
     </>
-  );
+  )
 }
 
-export default App;
+export default App

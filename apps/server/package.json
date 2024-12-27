@@ -2,27 +2,25 @@
   "name": "server",
   "version": "1.0.0",
   "description": "",
-  "main": "./src/index.ts",
+  "main": "index.ts",
+  "type": "module",
   "scripts": {
-    "dev": "ts-node ./src/index.ts",
-    "build": "tsc",
-    "clean": "rm -rf node_modules dist .turbo"
+    "dev": "tsc && node ./dist/index.js",
+    "build": "tsc"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@repo/websockets": "workspace:*",
-    "express": "^4.21.2",
+    "@repo/socket-events": "workspace:*",
     "radash": "^12.1.0",
-    "seedrandom": "^3.0.5",
-    "socket.io": "^4.8.1",
-    "typescript": "^5.7.2"
+    "typescript": "^5.7.2",
+    "uWebSockets.js": "github:uNetworking/uWebSockets.js#v20.51.0",
+    "uuid": "^11.0.3"
   },
   "devDependencies": {
-    "@types/express": "^5.0.0",
-    "@types/jest": "^29.5.14",
-    "@types/seedrandom": "^3.0.8",
-    "jest": "^29.7.0"
+    "@repo/typescript-config": "workspace:*",
+    "@types/node": "^20.11.24",
+    "nodemon": "^3.1.9"
   }
 }

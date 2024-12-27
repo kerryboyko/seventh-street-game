@@ -1,4 +1,3 @@
-import { Socket } from "socket.io";
 import Game from "../Game/Game.js";
 import { syncCodeGenerator } from "./syncCodeGenerator.js";
 

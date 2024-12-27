@@ -1,11 +1,12 @@
 {
   "$schema": "https://turbo.build/schema.json",
   "ui": "tui",
+  "globalEnv": ["FASTIFY_PORT"],
   "tasks": {
     "build": {
       "dependsOn": ["^build"],
       "inputs": ["$TURBO_DEFAULT$", ".env*"],
-      "outputs": ["dist/**", "!dist/cache/**"]
+      "outputs": [".next/**", "!.next/cache/**", "dist/**"]
     },
     "lint": {
       "dependsOn": ["^lint"]
@@ -16,9 +17,6 @@
     "dev": {
       "cache": false,
       "persistent": true
-    },
-    "clean": {
-      "dependsOn": ["^clean"]
     }
   }
 }
